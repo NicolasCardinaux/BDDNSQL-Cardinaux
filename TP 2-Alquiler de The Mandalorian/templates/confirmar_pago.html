@@ -78,6 +78,7 @@
     <div class="container">
         <h2>Confirmar Pago</h2>
         <p>Estás a punto de alquilar el episodio:</p>
+        <p><strong>{{ episodio_titulo }}</strong></p>
         <p class="precio">Precio: ${{ precio | default(5.99) }}</p>
         <button id="pagarBtn" onclick="confirmar()">Pagar</button>
         <p id="message" class="loading-message"></p>
@@ -159,7 +160,6 @@
             }
         }
 
-        // Verificar el estado del episodio al cargar la página
         document.addEventListener('DOMContentLoaded', verificarEstadoEpisodio);
     </script>
 </body>
