@@ -134,7 +134,10 @@ def confirmar_pago_page(episodio_id):
                 episodio["reservado_hasta"] = parse_datetime(episodio["reservado_hasta"])
                 print(f"Estado del episodio {episodio_id} al intentar confirmar pago: {episodio['estado']}")
                 if episodio["estado"] == "reservado" and episodio["reservado_hasta"] and datetime.now() < episodio["reservado_hasta"]:
-                    return render_template('confirmar_pago.html', episodio_id=episodio_id, precio=episodio["precio"])
+                    return render_template('confirmar_pago.html', 
+                                         episodio_id=episodio_id, 
+                                         precio=episodio["precio"],
+                                         episodio_titulo=episodio["titulo"])
                 return redirect(url_for('index'))
     return redirect(url_for('index'))
 
