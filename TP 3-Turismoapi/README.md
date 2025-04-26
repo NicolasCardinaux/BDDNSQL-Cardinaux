@@ -4,7 +4,7 @@
 
 Este proyecto es una **API de Turismo** desarrollada para Concepción del Uruguay, Entre Ríos, Argentina. Permite a los usuarios buscar puntos de interés cercanos (dentro de un radio de 5 km) a partir de una dirección específica (calle y número), y también permite agregar nuevos puntos de interés de manera manual. Los puntos de interés están organizados en las siguientes categorías:
 
-- **Cervecerías artesanales** (`breweries`)
+- **Cervecerías** (`breweries`)
 - **Universidades** (`universities`)
 - **Farmacias** (`pharmacies`)
 - **Centros de atención de emergencias** (`emergencies`)
