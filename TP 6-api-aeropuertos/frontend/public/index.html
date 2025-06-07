@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aeropuertos del Mundo ✈️</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dark-theme">
+    <div id="particles-js" class="background-particles"></div>
+    <div id="loader" class="loader">
+        <div class="spinner"></div>
+        <p>Cargando aeropuertos...</p>
+    </div>
+    <header>
+        <div class="header-content">
+            <h1><i class="fas fa-plane"></i> Mapa de Aeropuertos</h1>
+            <div class="header-actions">
+                <button id="toggle-sidebar" class="action-button header-button" title="Mostrar/Ocultar Sidebar">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <button id="theme-toggle" class="action-button header-button" aria-label="Alternar tema">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="toggle-manage" class="action-button header-button" title="Gestionar Aeropuertos">
+                    <i class="fas fa-cogs"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div id="map-container">
+            <div id="map"></div>
+            <button id="center-user-location" class="action-button" title="Centrar en mi ubicación">
+                <i class="fas fa-crosshairs"></i>
+            </button>
+        </div>
+        <div class="sidebar">
+            <div id="search-view">
+                <h2><i class="fas fa-search"></i> Buscar Aeropuerto por Nombre</h2>
+                <form id="search-airport-form">
+                    <label for="name-search">Nombre del Aeropuerto:</label>
+                    <input type="text" id="name-search" name="name_search" required placeholder="Ej: Isafjordur">
+                    <button type="submit" class="action-button"><i class="fas fa-search"></i> Buscar</button>
+                </form>
+                <hr>
+                <h2><i class="fas fa-info-circle"></i> Información del Aeropuerto</h2>
+                <div id="airport-info">
+                    <p>Haz clic en un aeropuerto en el mapa o busca por nombre para ver sus detalles.</p>
+                </div>
+                <hr>
+                <h2><i class="fas fa-star"></i> Aeropuertos Populares (Top 5)</h2>
+                <ul id="popular-airports-list">
+                    <li>Cargando...</li>
+                </ul>
+                <hr>
+                <h2><i class="fas fa-map-marker-alt"></i> Buscar Aeropuertos Cercanos</h2>
+                <form id="nearby-form">
+                    <label for="lat">Latitud:</label>
+                    <input type="number" id="lat" name="lat" step="any" required placeholder="Ej: -34.8222">
+                    <label for="lng">Longitud:</label>
+                    <input type="number" id="lng" name="lng" step="any" required placeholder="Ej: -58.5358">
+                    <label for="radius">Radio (km):</label>
+                    <input type="number" id="radius" name="radius" min="1" value="100" required>
+                    <button type="submit" class="action-button"><i class="fas fa-search"></i> Buscar Cercanos</button>
+                </form>
+                <div id="nearby-results-container">
+                    <h3>Resultados Cercanos:</h3>
+                    <ul id="nearby-airports-list">
+                        <li>Ingresa coordenadas y radio para buscar.</li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div id="manage-view" style="display: none;">
+                <div class="manage-container">
+                    <section class="manage-section">
+                        <h2><i class="fas fa-plus-circle"></i> Crear Nuevo Aeropuerto</h2>
+                        <form id="create-airport-form">
+                            <label for="create-iata">Código IATA:</label>
+                            <input type="text" id="create-iata" name="iata_faa" maxlength="3" required placeholder="Ej: JFK">
+                            <label for="create-name">Nombre:</label>
+                            <input type="text" id="create-name" name="name" required placeholder="Ej: John F. Kennedy International Airport">
+                            <label for="create-city">Ciudad, País:</label>
+                            <input type="text" id="create-city" name="city_raw" required placeholder="Ej: New York, USA">
+                            <label for="create-lat">Latitud:</label>
+                            <input type="number" id="create-lat" name="lat" step="any" required placeholder="Ej: 40.6398">
+                            <label for="create-lng">Longitud:</label>
+                            <input type="number" id="create-lng" name="lng" step="any" required placeholder="Ej: -73.7789">
+                            <label for="create-alt">Altitud (m):</label>
+                            <input type="number" id="create-alt" name="alt" placeholder="Ej: 13">
+                            <label for="create-tz">Zona Horaria:</label>
+                            <input type="text" id="create-tz" name="tz" placeholder="Ej: America/New_York">
+                            <button type="submit" class="action-button"><i class="fas fa-save"></i> Crear Aeropuerto</button>
+                        </form>
+                        <div id="create-result"></div>
+                    </section>
+
+                    <section class="manage-section">
+                        <h2><i class="fas fa-edit"></i> Modificar o Eliminar Aeropuerto</h2>
+                        <form id="search-manage-form">
+                            <label for="manage-name-search">Nombre del Aeropuerto:</label>
+                            <input type="text" id="manage-name-search" name="name_search" required placeholder="Ej: Isafjordur">
+                            <button type="submit" class="action-button"><i class="fas fa-search"></i> Buscar</button>
+                        </form>
+                        <div id="manage-airport-details">
+                            <p>Busca un aeropuerto por su nombre para modificarlo o eliminarlo.</p>
+                        </div>
+                        <form id="update-airport-form" style="display: none;">
+                            <label for="update-name">Nombre:</label>
+                            <input type="text" id="update-name" name="name" required>
+                            <label for="update-city">Ciudad, País:</label>
+                            <input type="text" id="update-city" name="city_raw" required>
+                            <label for="update-lat">Latitud:</label>
+                            <input type="number" id="update-lat" name="lat" step="any" required>
+                            <label for="update-lng">Longitud:</label>
+                            <input type="number" id="update-lng" name="lng" step="any" required>
+                            <label for="update-alt">Altitud (m):</label>
+                            <input type="number" id="update-alt" name="alt">
+                            <label for="update-tz">Zona Horaria:</label>
+                            <input type="text" id="update-tz" name="tz">
+                            <div class="manage-buttons">
+                                <button type="submit" class="action-button update-button"><i class="fas fa-save"></i> Guardar Cambios</button>
+                                <button type="button" id="delete-airport" class="action-button delete-button"><i class="fas fa-trash-alt"></i> Eliminar Aeropuerto</button>
+                            </div>
+                        </form>
+                        <div id="manage-result"></div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>Proyecto API Aeropuertos -  © 2025</p>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

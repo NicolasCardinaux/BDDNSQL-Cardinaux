@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionar Aeropuertos ✈️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dark-theme">
+    <div id="particles-js" class="background-particles"></div>
+    <header>
+        <div class="header-content">
+            <h1><i class="fas fa-cogs"></i> Gestionar Aeropuertos</h1>
+            <div class="header-actions">
+                <button id="theme-toggle" class="action-button header-button" aria-label="Alternar tema">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="close-window" class="action-button header-button" title="Cerrar Ventana">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="manage-container">
+            <section class="manage-section">
+                <h2><i class="fas fa-plus-circle"></i> Crear Nuevo Aeropuerto</h2>
+                <form id="create-airport-form">
+                    <label for="create-iata">Código IATA:</label>
+                    <input type="text" id="create-iata" name="iata_faa" maxlength="3" required placeholder="Ej: JFK">
+                    <label for="create-name">Nombre:</label>
+                    <input type="text" id="create-name" name="name" required placeholder="Ej: John F. Kennedy International Airport">
+                    <label for="create-city">Ciudad, País:</label>
+                    <input type="text" id="create-city" name="city_raw" required placeholder="Ej: New York, USA">
+                    <label for="create-lat">Latitud:</label>
+                    <input type="number" id="create-lat" name="lat" step="any" required placeholder="Ej: 40.6398">
+                    <label for="create-lng">Longitud:</label>
+                    <input type="number" id="create-lng" name="lng" step="any" required placeholder="Ej: -73.7789">
+                    <label for="create-alt">Altitud (m):</label>
+                    <input type="number" id="create-alt" name="alt" placeholder="Ej: 13">
+                    <label for="create-tz">Zona Horaria:</label>
+                    <input type="text" id="create-tz" name="tz" placeholder="Ej: America/New_York">
+                    <button type="submit" class="action-button"><i class="fas fa-save"></i> Crear Aeropuerto</button>
+                </form>
+                <div id="create-result"></div>
+            </section>
+
+            <section class="manage-section">
+                <h2><i class="fas fa-edit"></i> Modificar o Eliminar Aeropuerto</h2>
+                <form id="search-manage-form">
+                    <label for="manage-iata-search">Código IATA:</label>
+                    <input type="text" id="manage-iata-search" name="iata_search" maxlength="3" required placeholder="Ej: JFK">
+                    <button type="submit" class="action-button"><i class="fas fa-search"></i> Buscar</button>
+                </form>
+                <div id="manage-airport-details">
+                    <p>Busca un aeropuerto por su código IATA para modificarlo o eliminarlo.</p>
+                </div>
+                <form id="update-airport-form" style="display: none;">
+                    <label for="update-name">Nombre:</label>
+                    <input type="text" id="update-name" name="name" required>
+                    <label for="update-city">Ciudad, País:</label>
+                    <input type="text" id="update-city" name="city_raw" required>
+                    <label for="update-lat">Latitud:</label>
+                    <input type="number" id="update-lat" name="lat" step="any" required>
+                    <label for="update-lng">Longitud:</label>
+                    <input type="number" id="update-lng" name="lng" step="any" required>
+                    <label for="update-alt">Altitud (m):</label>
+                    <input type="number" id="update-alt" name="alt">
+                    <label for="update-tz">Zona Horaria:</label>
+                    <input type="text" id="update-tz" name="tz">
+                    <div class="manage-buttons">
+                        <button type="submit" class="action-button update-button"><i class="fas fa-save"></i> Guardar Cambios</button>
+                        <button type="button" id="delete-airport" class="action-button delete-button"><i class="fas fa-trash-alt"></i> Eliminar Aeropuerto</button>
+                    </div>
+                </form>
+                <div id="manage-result"></div>
+            </section>
+        </div>
+    </main>
+    <footer>
+        <p>Proyecto API Aeropuertos - BDDNSQL © 2025</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="js/manage-airports.js"></script>
+</body>
+</html>

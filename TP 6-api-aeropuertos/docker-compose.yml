@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:6.0 # Puedes usar una versión más reciente si es compatible
+    container_name: mongo_airports
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db # Volumen persistente para los datos de MongoDB
+    restart: unless-stopped
+    networks:
+      - airport_network
+
+  redis-geo:
+    image: redis:7-alpine
+    container_name: redis_geo_airports
+    ports:
+      - "6380:6379" # Mapeo a puerto diferente en host para evitar colisión si tienes otro Redis
+    command: redis-server --appendonly yes # Persistencia básica para Redis
+    volumes:
+      - redis_geo_data:/data
+    restart: unless-stopped
+    networks:
+      - airport_network
+
+  redis-pop:
+    image: redis:7-alpine
+    container_name: redis_pop_airports
+    ports:
+      - "6381:6379" # Mapeo a puerto diferente
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_pop_data:/data
+    restart: unless-stopped
+    networks:
+      - airport_network
+
+  backend:
+    build: ./backend
+    container_name: backend_airports_api
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+      - redis-geo
+      - redis-pop
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/airport_db
+      - REDIS_GEO_HOST=redis-geo
+      - REDIS_GEO_PORT=6379
+      - REDIS_POP_HOST=redis-pop
+      - REDIS_POP_PORT=6379
+      - PORT=3000
+      - NODE_ENV=development # o production
+    volumes:
+      - ./backend/src:/usr/src/app/src # Monta el código fuente para desarrollo (hot-reloading con nodemon)
+      - ./backend/airports.json:/usr/src/app/airports.json # Asegura que el json esté disponible
+    restart: unless-stopped
+    networks:
+      - airport_network
+
+  frontend:
+    build: ./frontend
+    container_name: frontend_airports_map
+    ports:
+      - "8080:80" # Accede al frontend en http://localhost:8080
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - airport_network
+
+volumes:
+  mongo_data:
+  redis_geo_data:
+  redis_pop_data:
+
+networks:
+  airport_network:
+    driver: bridge
