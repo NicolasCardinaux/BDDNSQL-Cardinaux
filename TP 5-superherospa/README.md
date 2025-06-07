@@ -1,47 +1,48 @@
-Superhero SPA
+# Superhero SPA
+
 Una elegante aplicación de una sola página (SPA) para gestionar superhéroes y villanos de cómics, con soporte para autocompletado, filtrado y persistencia de datos.
 
-Requisitos
+## Requisitos
 
-Docker y Docker Compose 
-Node.js (para el frontend) 
-Python 3.9 (para el backend y scripts) 
+- Docker y Docker Compose
+- Node.js (para el frontend)
+- Python 3.9 (para el backend y scripts)
 
+## Instalación
 
-Instalación
 Sigue estos pasos para poner en marcha el proyecto:
 
-Clona el repositorio:
-git clone https://github.com/tu-usuario/superhero-spa.git
-cd superhero-spa
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/tu-usuario/superhero-spa.git
+   cd superhero-spa
+   ```
 
+2. Inicia los contenedores:
+   ```bash
+   docker-compose up -d
+   ```
 
-Inicia los contenedores:
-docker-compose up -d
+3. Instala las dependencias del frontend:
+   ```bash
+   cd client
+   npm install
+   ```
 
+4. Inicia el frontend:
+   ```bash
+   npm start
+   ```
 
-Instala las dependencias del frontend:
-cd client
-npm install
+5. Carga los datos iniciales:
+   ```bash
+   cd scripts
+   python populate_db.py
+   ```
 
+## Uso
 
-Inicia el frontend:
-npm start
-
-
-Carga los datos iniciales:
-cd scripts
-python populate_db.py
-
-
-
-
- Uso
-
- Accede a http://localhost:3000 para explorar la SPA.
- Usa el formulario en /add para agregar nuevos personajes.
- Filtra por nombre en la página principal o por casa en /marvel o /dc.
-
-
-
+- Accede a `http://localhost:3000` para explorar el SPA.
+- Usa el formulario en `/add` para agregar nuevos personajes.
+- Filtra por nombre en la página principal o por casa en `/marvel` o `/dc`.
 
