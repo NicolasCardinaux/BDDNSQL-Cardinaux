@@ -27,7 +27,7 @@ Una aplicación web para visualizar y gestionar aeropuertos en un mapa interacti
    ```bash
    cd backend
    npm install
-   cp .env.example .env
+   cp .env
    ```
    Edita `.env` con las credenciales de MongoDB y Redis (local o en la nube).
 
