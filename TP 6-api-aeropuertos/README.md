@@ -63,11 +63,10 @@ Una aplicación web para visualizar y gestionar aeropuertos en un mapa interacti
 
 ## Despliegue
 
-1. Sube el repositorio a GitHub.
-2. Configura MongoDB Atlas y Redis Cloud con las credenciales en `.env`.
-3. Despliega el frontend en Vercel (carpeta `frontend/public`).
-4. Despliega el backend en Render (carpeta `backend`).
-5. Define las variables de entorno en Vercel y Render.
+1. Configura MongoDB Atlas y Redis Cloud con las credenciales en `.env`.
+2. Despliega el frontend en Vercel (carpeta `frontend/public`).
+3. Despliega el backend en Render (carpeta `backend`).
+4. Define las variables de entorno en Vercel y Render.
 
 ## Verificación en Consola
 
